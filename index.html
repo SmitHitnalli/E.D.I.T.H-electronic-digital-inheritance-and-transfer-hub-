@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E.D.I.T.H - Electronic Digital Inheritance & Transfer Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              accent: {
+                DEFAULT: '#9333EA', // Electric Purple
+                hover: '#A855F7',
+                glow: 'rgba(147, 51, 234, 0.4)',
+                cyan: '#06B6D4',
+              },
+              void: {
+                950: '#020408',
+                900: '#0A0F1E',
+                800: '#111827',
+                700: '#1E293B',
+              }
+            },
+            boxShadow: {
+              'glass': 'var(--shadow-glass)',
+              '3d': 'var(--shadow-3d)',
+              'accent-glow': 'var(--shadow-accent-glow)',
+              'cyan-glow': 'var(--shadow-cyan-glow)',
+              'highlight': 'var(--shadow-highlight)',
+              'button-hover': 'var(--shadow-button-hover)',
+            }
+          }
+        }
+      }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --grid-color: rgba(147, 51, 234, 0.04);
+        --bg-color: #020408;
+        --text-color: #F8FAFC;
+        --nebula-opacity: 0.15;
+        
+        /* Dark Mode Shadows: Soft, deep, layered */
+        --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        --shadow-3d: 0 20px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        --shadow-accent-glow: 0 0 30px rgba(147, 51, 234, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        --shadow-cyan-glow: 0 0 30px rgba(6, 182, 212, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        --shadow-highlight: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        --shadow-button-hover: 0 12px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      }
+
+      .light {
+        --grid-color: rgba(6, 182, 212, 0.08);
+        --bg-color: #F8FAFF;
+        --text-color: #0F172A;
+        --nebula-opacity: 0.08;
+
+        /* Light Mode Shadows: Subtle, colored, airy */
+        --shadow-glass: 0 12px 32px -8px rgba(147, 51, 234, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.9);
+        --shadow-3d: 0 15px 40px -15px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 1);
+        --shadow-accent-glow: 0 12px 24px -5px rgba(147, 51, 234, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        --shadow-cyan-glow: 0 12px 24px -5px rgba(6, 182, 212, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        --shadow-highlight: 0 8px 16px -4px rgba(147, 51, 234, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        --shadow-button-hover: 0 10px 20px -5px rgba(147, 51, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      }
+
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        overflow-x: hidden;
+        min-height: 100vh;
+        letter-spacing: -0.015em;
+        transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), color 0.8s ease;
+      }
+
+      .perspective-scene {
+        position: fixed;
+        inset: 0;
+        perspective: 2000px;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .grid-floor {
+        position: absolute;
+        width: 400%;
+        height: 400%;
+        top: -150%;
+        left: -150%;
+        background-image: 
+          linear-gradient(var(--grid-color) 1.5px, transparent 1.5px),
+          linear-gradient(90deg, var(--grid-color) 1.5px, transparent 1.5px);
+        background-size: 80px 80px;
+        transform: rotateX(60deg) rotateZ(5deg);
+        animation: grid-move 60s linear infinite;
+        opacity: 0.5;
+      }
+
+      @keyframes grid-move {
+        from { transform: rotateX(60deg) rotateZ(5deg) translateY(0); }
+        to { transform: rotateX(60deg) rotateZ(5deg) translateY(80px); }
+      }
+
+      .nebula {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(140px);
+        opacity: var(--nebula-opacity);
+        z-index: -2;
+        transition: opacity 0.8s ease;
+        animation: drift 30s ease-in-out infinite alternate;
+      }
+
+      .nebula-1 { width: 1200px; height: 1200px; background: radial-gradient(circle, #9333EA 0%, transparent 70%); top: -30%; left: -30%; animation-delay: 0s; }
+      .nebula-2 { width: 1000px; height: 1000px; background: radial-gradient(circle, #06B6D4 0%, transparent 70%); bottom: -30%; right: -30%; animation-delay: -15s; }
+      .nebula-3 { width: 800px; height: 800px; background: radial-gradient(circle, #ec4899 0%, transparent 70%); top: 40%; left: 60%; animation-delay: -5s; opacity: 0.05; }
+
+      @keyframes drift {
+        from { transform: translate(0, 0) scale(1); }
+        to { transform: translate(100px, 50px) scale(1.1); }
+      }
+      
+      .glass {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+
+      .dark .glass {
+        background: rgba(10, 15, 30, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .light .glass {
+        background: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(147, 51, 234, 0.1);
+      }
+
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(147, 51, 234, 0.2); border-radius: 10px; }
+      
+      button, input, .card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "framer-motion": "https://esm.sh/framer-motion@^12.29.2",
+        "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
+      }
+    }
+    </script>
+  </head>
+  <body class="antialiased">
+    <div class="perspective-scene">
+      <div class="grid-floor"></div>
+      <div class="nebula nebula-1"></div>
+      <div class="nebula nebula-2"></div>
+      <div class="nebula nebula-3"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  </body>
+</html>
