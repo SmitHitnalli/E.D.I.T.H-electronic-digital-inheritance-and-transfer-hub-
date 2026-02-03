@@ -1,14 +1,19 @@
 import React from 'react';
 import { useApp } from '../App';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Shield, Users, Lock, ChevronRight, Moon, Sun, Heart, Activity, Globe } from 'lucide-react';
 import VaultAnimation from '../components/VaultAnimation';
 
 const LandingPage: React.FC = () => {
   const { setCurrentPage, isDarkMode, setDarkMode } = useApp();
-
+  const { scrollY } = useScroll();
+  
+  const y1 = useTransform(scrollY, [0, 500], [0, -100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -50]);
+  
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
+      {/* Navigation */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl z-50 glass rounded-[28px] px-8 h-16 flex items-center justify-between shadow-glass">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-accent-glow">
@@ -43,23 +48,25 @@ const LandingPage: React.FC = () => {
       </nav>
 
       <main className="relative z-10 pt-44 pb-20 px-6">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center min-h-[600px]">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            style={{ y: y1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-20"
           >
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 rounded-full border border-accent/20 mb-10 shadow-highlight">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-[10px] font-black text-accent uppercase tracking-[0.2em]">Electronic Digital Inheritance & Transfer Hub</span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1] dark:text-white tracking-tight mb-10">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[1.05] dark:text-white tracking-tight mb-10">
               Your legacy, <br /><span className="text-accent italic">safely passed on.</span>
             </h1>
             
             <p className="text-lg md:text-xl text-zinc-500 dark:text-zinc-400 mb-14 max-w-lg leading-relaxed font-medium">
-              E.D.I.T.H provides a premium gateway for your digital estate—ensuring vital assets reach your chosen heirs with absolute security.
+              E.D.I.T.H provides a high-fidelity gateway for your digital estate—ensuring vital assets reach your heirs with absolute cryptographic security.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-5">
@@ -78,12 +85,17 @@ const LandingPage: React.FC = () => {
             </div>
           </motion.div>
 
-          <div className="hidden lg:block relative h-[600px] w-full">
+          <motion.div 
+            className="hidden lg:flex relative h-full w-full items-center justify-center"
+            style={{ y: y2 }}
+          >
+            {/* Vault radiates particles globally from here */}
             <VaultAnimation />
-          </div>
+          </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-48 grid md:grid-cols-3 gap-8 md:gap-12">
+        {/* Feature Cards */}
+        <div className="max-w-7xl mx-auto mt-48 grid md:grid-cols-3 gap-8 md:gap-12 relative z-20">
           {[
             { 
               icon: <Lock size={26} className="text-accent" />, 
@@ -103,13 +115,14 @@ const LandingPage: React.FC = () => {
           ].map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
+              transition={{ delay: i * 0.15, duration: 0.8, ease: "easeOut" }}
               viewport={{ once: true }}
-              whileHover={{ y: -12, boxShadow: 'var(--shadow-3d)' }}
-              className="p-10 md:p-12 glass rounded-[40px] shadow-highlight group transition-all duration-500 border border-white/5"
+              whileHover={{ y: -15, scale: 1.02, boxShadow: 'var(--shadow-3d)' }}
+              className="p-10 md:p-12 glass rounded-[48px] shadow-highlight group transition-all duration-500 border border-white/5 relative overflow-hidden"
             >
+              <div className="absolute -right-8 -top-8 w-32 h-32 bg-accent/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="w-16 h-16 bg-accent/5 rounded-[24px] flex items-center justify-center mb-10 border border-accent/20 group-hover:bg-accent group-hover:text-white group-hover:shadow-accent-glow transition-all">
                 {item.icon}
               </div>
@@ -121,7 +134,7 @@ const LandingPage: React.FC = () => {
       </main>
       
       <footer className="relative z-10 py-20 text-center">
-        <p className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.4em] opacity-50">Secure Handover Technology • E.D.I.T.H Council</p>
+        <p className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.4em] opacity-50">High-Security Temporal Handover • E.D.I.T.H Architects</p>
       </footer>
     </div>
   );
