@@ -12,9 +12,9 @@
           extend: {
             colors: {
               accent: {
-                DEFAULT: '#9333EA', // Electric Purple
-                hover: '#A855F7',
-                glow: 'rgba(147, 51, 234, 0.4)',
+                DEFAULT: 'var(--color-accent)', 
+                hover: 'var(--color-accent-hover)',
+                glow: 'var(--color-accent-glow)',
                 cyan: '#06B6D4',
               },
               void: {
@@ -39,12 +39,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
       :root {
+        --color-accent: #9333EA; /* Electric Purple */
+        --color-accent-hover: #A855F7;
+        --color-accent-glow: rgba(147, 51, 234, 0.4);
+        --nebula-1-color: #9333EA;
+        --nebula-2-color: #06B6D4;
+        
         --grid-color: rgba(147, 51, 234, 0.04);
         --bg-color: #020408;
         --text-color: #F8FAFC;
         --nebula-opacity: 0.15;
         
-        /* Dark Mode Shadows: Soft, deep, layered */
+        /* Dark Mode Shadows */
         --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
         --shadow-3d: 0 20px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
         --shadow-accent-glow: 0 0 30px rgba(147, 51, 234, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
@@ -54,18 +60,24 @@
       }
 
       .light {
-        --grid-color: rgba(6, 182, 212, 0.08);
+        --color-accent: #4F46E5; /* Premium Cobalt Blue */
+        --color-accent-hover: #4338CA;
+        --color-accent-glow: rgba(79, 70, 229, 0.2);
+        --nebula-1-color: #4F46E5;
+        --nebula-2-color: #0EA5E9;
+
+        --grid-color: rgba(79, 70, 229, 0.08);
         --bg-color: #F8FAFF;
         --text-color: #0F172A;
         --nebula-opacity: 0.08;
 
-        /* Light Mode Shadows: Subtle, colored, airy */
-        --shadow-glass: 0 12px 32px -8px rgba(147, 51, 234, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.9);
+        /* Light Mode Shadows: Sophisticated Blue-tinted */
+        --shadow-glass: 0 12px 32px -8px rgba(79, 70, 229, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.9);
         --shadow-3d: 0 15px 40px -15px rgba(15, 23, 42, 0.12), inset 0 1px 1px rgba(255, 255, 255, 1);
-        --shadow-accent-glow: 0 12px 24px -5px rgba(147, 51, 234, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-        --shadow-cyan-glow: 0 12px 24px -5px rgba(6, 182, 212, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
-        --shadow-highlight: 0 8px 16px -4px rgba(147, 51, 234, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        --shadow-button-hover: 0 10px 20px -5px rgba(147, 51, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        --shadow-accent-glow: 0 12px 24px -5px rgba(79, 70, 229, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        --shadow-cyan-glow: 0 12px 24px -5px rgba(14, 165, 233, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+        --shadow-highlight: 0 8px 16px -4px rgba(79, 70, 229, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        --shadow-button-hover: 0 10px 20px -5px rgba(79, 70, 229, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
       }
 
       body {
@@ -99,6 +111,7 @@
         transform: rotateX(60deg) rotateZ(5deg);
         animation: grid-move 60s linear infinite;
         opacity: 0.5;
+        transition: background-image 0.8s ease;
       }
 
       @keyframes grid-move {
@@ -112,12 +125,12 @@
         filter: blur(140px);
         opacity: var(--nebula-opacity);
         z-index: -2;
-        transition: opacity 0.8s ease;
+        transition: opacity 0.8s ease, background 0.8s ease;
         animation: drift 30s ease-in-out infinite alternate;
       }
 
-      .nebula-1 { width: 1200px; height: 1200px; background: radial-gradient(circle, #9333EA 0%, transparent 70%); top: -30%; left: -30%; animation-delay: 0s; }
-      .nebula-2 { width: 1000px; height: 1000px; background: radial-gradient(circle, #06B6D4 0%, transparent 70%); bottom: -30%; right: -30%; animation-delay: -15s; }
+      .nebula-1 { width: 1200px; height: 1200px; background: radial-gradient(circle, var(--nebula-1-color) 0%, transparent 70%); top: -30%; left: -30%; animation-delay: 0s; }
+      .nebula-2 { width: 1000px; height: 1000px; background: radial-gradient(circle, var(--nebula-2-color) 0%, transparent 70%); bottom: -30%; right: -30%; animation-delay: -15s; }
       .nebula-3 { width: 800px; height: 800px; background: radial-gradient(circle, #ec4899 0%, transparent 70%); top: 40%; left: 60%; animation-delay: -5s; opacity: 0.05; }
 
       @keyframes drift {
@@ -137,12 +150,12 @@
 
       .light .glass {
         background: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(147, 51, 234, 0.1);
+        border: 1px solid rgba(79, 70, 229, 0.1);
       }
 
       .custom-scrollbar::-webkit-scrollbar { width: 4px; }
       .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(147, 51, 234, 0.2); border-radius: 10px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(79, 70, 229, 0.2); border-radius: 10px; }
       
       button, input, .card {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
