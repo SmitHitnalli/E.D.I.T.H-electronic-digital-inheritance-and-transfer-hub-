@@ -56,7 +56,7 @@ const LandingPage: React.FC = () => {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-20"
           >
-            <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 rounded-full border border-accent/20 mb-10 shadow-highlight">
+            <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 rounded-full border border-slate-200 dark:border-white/5 mb-10 shadow-highlight">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-[10px] font-black text-accent uppercase tracking-[0.2em]">Electronic Digital Inheritance & Transfer Hub</span>
             </div>

@@ -9,6 +9,17 @@ import PrivacyTrust from './pages/PrivacyTrust';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ShieldAlert, LogOut, Skull, Heart } from 'lucide-react';
 
+export type TutorialStep = 
+  | 'WELCOME' 
+  | 'NAV_VAULT' 
+  | 'ADD_ASSET' 
+  | 'NAV_PEOPLE' 
+  | 'ADD_NOMINEE' 
+  | 'NAV_VOICE' 
+  | 'NAV_PROFILE'
+  | 'EDIT_PROFILE'
+  | 'COMPLETE';
+
 interface AppContextType {
   user: UserProfile | null;
   setUser: (u: UserProfile | null) => void;
@@ -21,6 +32,8 @@ interface AppContextType {
   currentPage: string;
   setCurrentPage: (p: string) => void;
   markAsDeceased: (benefactorId: string) => void;
+  tutorialStep: TutorialStep | null;
+  setTutorialStep: (step: TutorialStep | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -43,6 +56,10 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState('home');
   const [assets, setAssets] = useState<Asset[]>([]);
   const [nominees, setNominees] = useState<Nominee[]>([]);
+  const [tutorialStep, setTutorialStep] = useState<TutorialStep | null>(() => {
+    const saved = localStorage.getItem('edith_tutorial_step');
+    return saved ? (saved as TutorialStep) : null;
+  });
 
   useEffect(() => {
     if (isDarkMode) {
@@ -63,6 +80,14 @@ const App: React.FC = () => {
       localStorage.removeItem('edith_user');
     }
   }, [user]);
+
+  useEffect(() => {
+    if (tutorialStep) {
+      localStorage.setItem('edith_tutorial_step', tutorialStep);
+    } else {
+      localStorage.removeItem('edith_tutorial_step');
+    }
+  }, [tutorialStep]);
 
   const markAsDeceased = (benefactorId: string) => {
     if (user && user.id === benefactorId) {
@@ -88,7 +113,7 @@ const App: React.FC = () => {
                This account is now in legacy mode. Your digital estate has been handed over to your chosen heirs.
              </p>
              <button 
-               onClick={() => { setUser(null); setCurrentPage('home'); }}
+               onClick={() => { setUser(null); setCurrentPage('home'); setTutorialStep(null); }}
                className="w-full py-5 bg-accent text-white rounded-[18px] font-bold text-lg uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all shadow-accent-glow"
              >
                <LogOut size={20} className="inline mr-3" /> Exit Securely
@@ -122,7 +147,8 @@ const App: React.FC = () => {
   return (
     <AppContext.Provider value={{ 
       user, setUser, isDarkMode, setDarkMode, assets, setAssets, 
-      nominees, setNominees, currentPage, setCurrentPage, markAsDeceased 
+      nominees, setNominees, currentPage, setCurrentPage, markAsDeceased,
+      tutorialStep, setTutorialStep
     }}>
       <div className="min-h-screen relative overflow-x-hidden selection:bg-accent selection:text-white transition-colors duration-300">
         <AnimatePresence mode="wait">

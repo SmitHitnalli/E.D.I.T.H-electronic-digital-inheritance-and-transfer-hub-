@@ -17,7 +17,7 @@ const TriggerSettings: React.FC = () => {
         </button>
 
         <header className="mb-20">
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 rounded-full border border-accent/20 mb-8">
+          <div className="inline-flex items-center gap-3 px-4 py-2 bg-accent/10 rounded-full border border-slate-200 dark:border-white/5 mb-8">
             <Activity size={12} className="text-accent" />
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Inactivity Triggers</span>
           </div>
@@ -28,7 +28,7 @@ const TriggerSettings: React.FC = () => {
         <div className="grid gap-10">
           <motion.div whileHover={{ scale: 1.01 }} className="glass p-12 rounded-[56px] shadow-3d border border-slate-200 dark:border-white/10 relative overflow-hidden group">
             <div className="flex flex-col md:flex-row items-start gap-10">
-               <div className="w-20 h-20 bg-accent/10 rounded-3xl flex items-center justify-center text-accent border border-accent/20 group-hover:scale-110 transition-transform">
+               <div className="w-20 h-20 bg-accent/10 rounded-3xl flex items-center justify-center text-accent border border-slate-200 dark:border-white/5 group-hover:scale-110 transition-transform">
                   <Clock size={40} />
                </div>
                <div className="flex-1">

@@ -7,7 +7,7 @@ import { Shield, ArrowLeft, HelpCircle, Eye, EyeOff, Globe, Zap, Fingerprint, Su
 import OnboardingGuide from '../components/OnboardingGuide';
 
 const Auth: React.FC = () => {
-  const { setUser, setCurrentPage, currentPage, isDarkMode, setDarkMode } = useApp();
+  const { setUser, setCurrentPage, currentPage, isDarkMode, setDarkMode, setTutorialStep } = useApp();
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>(currentPage === 'signup' ? 'signup' : 'login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,6 +39,7 @@ const Auth: React.FC = () => {
   const finishOnboarding = () => {
     setUser(tempUser);
     setShowOnboarding(false);
+    setTutorialStep('WELCOME'); // Start initialization protocol
     setCurrentPage('dashboard');
   };
 
